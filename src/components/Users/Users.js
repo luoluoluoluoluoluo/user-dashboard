@@ -15,6 +15,7 @@ import {
 import {
 	routerRedux
 } from 'dva/router';
+import UserModal from './UserModal';
 
 function Users({
 	dispatch,
@@ -25,7 +26,10 @@ function Users({
 }) {
 
 	function deleteHandler(id) {
-		console.warn(`TODO:${id}`);
+		dispatch({
+			type: 'users/remove',
+			payload: id
+		});
 	}
 
 	function pageChangeHandler(page) {
@@ -35,6 +39,16 @@ function Users({
 				page
 			}
 		}));
+	}
+
+	function editHandler(id, values) {
+		dispatch({
+			type: 'users/patch',
+			payload: {
+				id,
+				values
+			}
+		})
 	}
 
 	const columns = [{
@@ -53,10 +67,12 @@ function Users({
 	}, {
 		title: 'Operation',
 		key: 'operation',
-		render: (text, id) => (
+		render: (text, record) => (
 			<span className={styles.operation}>
-				<a href="">Edit</a>
-				<Popconfirm title="Confirm to delete?" onConfrim={deleteHandler.bind(null,id)}>
+				<UserModal record={record} onOk={editHandler.bind(null,record.id)}>
+					<a>Edit</a>
+				</UserModal>
+				<Popconfirm title="Confirm to delete?" onConfrim={deleteHandler.bind(null,record.id)}>
 					<a href="">Delete</a>
 				</Popconfirm>
 			</span>
