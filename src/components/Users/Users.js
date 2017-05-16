@@ -28,7 +28,7 @@ function Users({
 	function deleteHandler(id) {
 		dispatch({
 			type: 'users/remove',
-			payload: id
+			payload: id,
 		});
 	}
 
@@ -37,7 +37,7 @@ function Users({
 			pathname: '/users',
 			query: {
 				page
-			}
+			},
 		}));
 	}
 
@@ -48,7 +48,14 @@ function Users({
 				id,
 				values
 			}
-		})
+		});
+	}
+
+	function createHandler(values) {
+		dispatch({
+			type: 'users/create',
+			payload: values,
+		});
 	}
 
 	const columns = [{
@@ -81,20 +88,27 @@ function Users({
 
 	return (
 		<div className={styles.normal}>
-      <Table 
-	      columns={columns}
-	      loading={loading}
-	      dataSource={dataSource}
-	      rowKey={record=>record.id}
-	      pagination={false}
-	      />
-      <Pagination 
-      	className="ant-table-pagination"
-        total={total}
-        current={current}
-        pageSize={PAGE_SIZE}
-        onChange={pageChangeHandler}
-      />
+			<div>
+				<div className={styles.create}>
+					<UserModal record={{}} onOk={createHandler}>
+						<Button type='primary'>Create User</Button>
+					</UserModal>
+				</div>
+		      <Table 
+			      columns={columns}
+			      loading={loading}
+			      dataSource={dataSource}
+			      rowKey={record=>record.id}
+			      pagination={false}
+			      />
+		      <Pagination 
+		      	className="ant-table-pagination"
+		        total={total}
+		        current={current}
+		        pageSize={PAGE_SIZE}
+		        onChange={pageChangeHandler}
+		      />
+	    </div>
     </div>
 	);
 }
