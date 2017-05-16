@@ -15,6 +15,7 @@ import {
 
 function Users({
 	list: dataSource,
+	loading,
 	total,
 	page: current
 }) {
@@ -51,6 +52,7 @@ function Users({
 		<div className={styles.normal}>
       <Table 
 	      columns={columns}
+	      loading={loading}
 	      dataSource={dataSource}
 	      rowKey={record=>record.id}
 	      pagination={false}
@@ -73,6 +75,7 @@ function mapStateToProps(state) {
 	} = state.users;
 	return {
 		list,
+		loading: state.loading.models.users,
 		total,
 		page
 	};

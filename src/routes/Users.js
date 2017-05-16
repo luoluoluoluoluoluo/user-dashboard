@@ -10,11 +10,11 @@ function Users({
 	location
 }) {
 	return (
-		// <MainLayout location={location}>
+		<MainLayout location={location}>
 		<div className={styles.normal}>
 				<UsersComponent />
 	    	</div>
-		// </MainLayout>
+		</MainLayout>
 	);
 }
 
