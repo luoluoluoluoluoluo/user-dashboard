@@ -12,16 +12,31 @@ import {
 import {
 	PAGE_SIZE
 } from '../../constants';
+import {
+	routerRedux
+} from 'dva/router';
 
 function Users({
+	dispatch,
 	list: dataSource,
 	loading,
 	total,
 	page: current
 }) {
+
 	function deleteHandler(id) {
 		console.warn(`TODO:${id}`);
 	}
+
+	function pageChangeHandler(page) {
+		dispatch(routerRedux.push({
+			pathname: '/users',
+			query: {
+				page
+			}
+		}));
+	}
+
 	const columns = [{
 		title: 'Name',
 		dataIndex: 'name',
@@ -62,6 +77,7 @@ function Users({
         total={total}
         current={current}
         pageSize={PAGE_SIZE}
+        onChange={pageChangeHandler}
       />
     </div>
 	);
